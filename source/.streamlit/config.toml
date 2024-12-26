@@ -1,0 +1,12 @@
+[theme]
+primaryColor="#8dc63f"
+backgroundColor="#FFFFFF"
+secondaryBackgroundColor="#F0F2F6"
+textColor="#262730"
+font="sans serif"
+
+[client]
+toolbarMode="viewer"
+
+[server]
+port = 8080

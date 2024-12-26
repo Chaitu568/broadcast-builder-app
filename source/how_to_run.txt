@@ -1,0 +1,4 @@
+step1. Execute:  uvicorn flask_api_endpoint:app --reload --port 8001
+step2. copy the post used above to line 14 of file streamlit_gui_app.py
+step3. Execute: streamlit run streamlit_gui_app.py --server.port 8080
+stemp4. web app should be accessible at port 8080

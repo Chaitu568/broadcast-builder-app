@@ -1,0 +1,14 @@
+{
+    "backend_url":"http://127.0.0.1",
+    "backend_port":8001,
+    "log_filename":"logs_blb_app.log",
+    "bucket":"mobivity-datascience",
+    "db_url":"dev-dwh-cluster.cmuwp5enko6p.us-east-1.redshift.amazonaws.com",
+    "database_name":"dev",
+    "db_user":"",
+    "db_pass":"",
+    "s3_access_key":"",
+    "s3_secret_access_key":"",
+    "s3_ss_access_key":"",
+    "s3_ss_secret_access_key":""
+}
