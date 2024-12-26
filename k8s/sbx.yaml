@@ -1,0 +1,17 @@
+app: 
+  env: sbx
+  publicSubnets: subnet-0caee8e39e011551c,subnet-07e1b2fb397a16435,subnet-0d904144ad2c2e845
+  ingressEstimator: 
+    certificateArn: arn:aws:acm:us-west-2:490010349947:certificate/27602e30-030b-40fb-b4fa-5b529ca62258
+    name: broadcast-builder-staging-estimator-lb
+    host: sandbox.broadcast-estimator.mobivity.com
+  ingress: 
+    certificateArn: arn:aws:acm:us-west-2:490010349947:certificate/2b26da6b-da1f-407c-9d5d-cddfe62d4a2d
+    name: broadcast-builder-staging-lb
+    host: sandbox.broadcast-builder.mobivity.com
+  container: 
+    env: 
+      - name: "recurrency_bucket"
+        value: "flight-customer-files-s3-sbx"
+      - name: "environment"
+        value: "sbx"

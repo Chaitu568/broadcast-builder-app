@@ -1,0 +1,22 @@
+app: 
+  replicas: 1
+  name: broadcast-builder
+  ecrRepo: builderapp
+  repoTag: 35
+  serviceAccountName: broadcast-builder-serviceaccount
+  ingressEstimator:
+    name: broadcast-builder-staging-estimator-lb
+  ingress:
+    name: broadcast-builder-staging-lb
+  service: 
+    name: broadcast-builder-svc
+    port: 80
+    targetPort: 8080
+  serviceEstimator:
+    name: broadcast-estimator-svc
+    port: 80
+    targetPort: 8081
+
+
+
+

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+  namespace: {{ .Values.app.name }}
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      annotations:
+        ad.datadoghq.com/{{ .Values.app.name }}.logs: '[{"source": "{{ .Values.app.name }}","service": "{{ .Values.app.name }}","tags": ["env:{{ .Values.app.env }}"]}]'
+      labels:
+        app: {{ .Values.app.name }}
+        
+    spec:
+      serviceAccountName: {{ .Values.app.serviceAccountName }}
+      containers:
+        - image: 490010349947.dkr.ecr.us-west-2.amazonaws.com/services/{{ .Values.app.env }}/{{ .Values.app.ecrRepo }}:{{ .Values.app.repoTag }}
+          name: {{ .Values.app.name }}
+          env:
+            - name: DD_AGENT_HOST
+              valueFrom: 
+                fieldRef: 
+                  fieldPath: status.hostIP
+            {{- if kindIs "slice" .Values.app.container.env }}
+            {{- range .Values.app.container.env }}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }}
+            {{- end }}
+          readinessProbe:
+            periodSeconds: 1
+            successThreshold: 5
+            httpGet:
+              path: /
+              port: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80

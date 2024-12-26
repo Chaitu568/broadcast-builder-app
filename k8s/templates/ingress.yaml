@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.app.ingress.name }}
+  namespace: {{ .Values.app.name }}
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/load-balancer-name: {{ .Values.app.ingress.name }}
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.app.certificateArn }}
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-2016-08
+    alb.ingress.kubernetes.io/subnets: {{ .Values.app.publicSubnets }}
+    alb.ingress.kubernetes.io/target-type: 'ip'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80,"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-path: '/'
+  finalizers:
+    - ingress.k8s.aws/resources
+spec:
+  ingressClassName: alb
+  tls:
+    - hosts:
+      - {{ .Values.app.ingress.host }}
+  rules:
+    - http:
+        paths:
+        - path: /
+          backend:
+            service:
+              name: {{ .Values.app.service.name }}
+              port:
+                number: {{ .Values.app.service.port }}
+          pathType: Prefix

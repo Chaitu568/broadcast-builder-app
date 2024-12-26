@@ -1,0 +1,6 @@
+apiVersion: v2
+name: broadcast-builder
+description: Kubernetes helm chart for broadcast-builder
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
